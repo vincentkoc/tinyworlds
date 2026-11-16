@@ -10,6 +10,13 @@ import {
 } from "../data";
 import { parseManifest } from "../manifest";
 
+const TOWER = {
+  title: "Ping An Finance Center",
+  url: "https://en.wikipedia.org/wiki/Ping_An_Finance_Center",
+  text: "A supertall skyscraper in Futian.",
+  lang: "en",
+};
+
 describe("loading the sights", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -31,6 +38,27 @@ describe("loading the sights", () => {
     vi.stubGlobal("fetch", fetchMock);
     await loadSightTexts("b7", "es-ES");
     expect(fetchMock.mock.calls[0][0]).toBe("/data/tinynyc/sights.es-ES.json?v=b7");
+  });
+
+  it("reads the English file for a language the data set was built without", async () => {
+    const fetchMock = vi.fn(async (url: string) =>
+      url.includes(".en-US.")
+        ? new Response(JSON.stringify({ b1: TOWER }))
+        : new Response("", { status: 404 }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(loadSightTexts("b7", "zh-CN")).resolves.toEqual({ b1: TOWER });
+    expect(fetchMock.mock.calls.map((call) => call[0])).toEqual([
+      "/data/tinynyc/sights.zh-CN.json?v=b7",
+      "/data/tinynyc/sights.en-US.json?v=b7",
+    ]);
+  });
+
+  it("asks only once for English, and has nothing when that is missing too", async () => {
+    const fetchMock = answer(404, {});
+    vi.stubGlobal("fetch", fetchMock);
+    await expect(loadSightTexts("b7", "en-US")).resolves.toEqual({});
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
 
