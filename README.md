@@ -207,6 +207,11 @@ deploy/deploy.sh release              # what the workflow runs: main, where the 
 
 See [deploy/README.md](deploy/README.md).
 
+## Other maps
+
+[Tiny Shenzhen](https://tinysz.com) is a map of Shenzhen built with this pipeline
+([vincentkoc/tinyshenzhen](https://github.com/vincentkoc/tinyshenzhen)).
+
 ## Contact
 
 Questions, ideas, a city you want to see: me@nihey.org
