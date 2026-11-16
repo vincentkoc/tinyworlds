@@ -26,16 +26,23 @@ export const isLocale = (value: unknown): value is Locale =>
 
 /**
  * The first of the browser's languages (`navigator.languages`, most wanted first) that we speak,
- * matched on the primary subtag; English when none is.
+ * matched on the primary subtag; `fallback` when none is: the language the page was baked in, so
+ * a visitor we cannot serve in their own keeps what they first saw. English unless said.
  */
-export function resolveLocale(languages: readonly string[] | null | undefined): Locale {
+export function resolveLocale(
+  languages: readonly string[] | null | undefined,
+  fallback: Locale = DEFAULT_LOCALE,
+): Locale {
   for (const tag of languages ?? []) {
     if (typeof tag !== "string") continue;
     const match = BY_LANGUAGE[tag.trim().toLowerCase().split(/[-_]/)[0]];
     if (match) return match;
   }
-  return DEFAULT_LOCALE;
+  return fallback;
 }
 
 /** "pt-BR" as Open Graph writes it: "pt_BR". */
 export const ogLocale = (locale: Locale): string => locale.replace("-", "_");
+
+/** For the script that settles the language before the page paints (early.ts). */
+export { BY_LANGUAGE };
