@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/locale";
+import { apiLocale } from "./api-locale";
 
 /**
  * Donations. Two ways in, both optional and both named by the build environment:
@@ -19,6 +20,7 @@ export const DONATE_LINKS: Links = {
   "en-US": (process.env.NEXT_PUBLIC_DONATE_URL ?? "").trim(),
   "pt-BR": (process.env.NEXT_PUBLIC_DONATE_URL_PT ?? "").trim(),
   "es-ES": (process.env.NEXT_PUBLIC_DONATE_URL_ES ?? "").trim(),
+  "zh-CN": (process.env.NEXT_PUBLIC_DONATE_URL_ZH ?? "").trim(),
 };
 
 /** The GraphQL endpoint: a full URL or a same-origin path. Empty when the build has no API. */
@@ -29,6 +31,7 @@ export const CHECKOUT_LOCALE: Record<Locale, string> = {
   "en-US": "en",
   "pt-BR": "pt-BR",
   "es-ES": "es",
+  "zh-CN": "zh",
 };
 
 /**
@@ -255,7 +258,7 @@ export function checkoutInput(
           ? Math.min(AMOUNT_MAX * 100, Math.max(AMOUNT_MIN * 100, Math.round(amountCents)))
           : AMOUNT_MIN * 100,
     world,
-    locale,
+    locale: apiLocale(locale),
     returnUrl,
     visitId,
     benefactorName,

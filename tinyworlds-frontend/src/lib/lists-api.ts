@@ -5,6 +5,7 @@ import type { AdminSession } from "./admin";
 import { API_TIMEOUT, API_URL, withTimeout } from "./donate";
 import { listParam, parseMyLists, type ListKey, type MyLists } from "./lists";
 import { SignInError } from "./sign-in-api";
+import { apiLocale } from "./api-locale";
 
 /**
  * The lists' calls: a signed-in donor's own (Apollo, one client per session, as
@@ -80,7 +81,7 @@ const LEAVE_LIST = gql`
 function listInput(key: ListKey, locale?: Locale): { city?: string; locale?: string } {
   const input: { city?: string; locale?: string } = {};
   if (key.kind === "city") input.city = listParam(key);
-  if (locale) input.locale = locale;
+  if (locale) input.locale = apiLocale(locale);
   return input;
 }
 

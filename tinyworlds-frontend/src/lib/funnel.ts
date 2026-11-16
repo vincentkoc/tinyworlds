@@ -1,6 +1,7 @@
 import type { Locale } from "@/i18n/locale";
 import { hasAdminSession } from "./admin";
 import { API_URL } from "./donate";
+import { apiLocale } from "./api-locale";
 
 /**
  * The donation funnel, as the site reports it to the API: which steps towards a donation a
@@ -46,7 +47,10 @@ export function stepRequest(
   world: string,
   locale: Locale,
 ): { query: string; variables: { input: Record<string, string> } } {
-  return { query: TRACK, variables: { input: { visitId: visit, step, world, locale } } };
+  return {
+    query: TRACK,
+    variables: { input: { visitId: visit, step, world, locale: apiLocale(locale) } },
+  };
 }
 
 /** This tab's visit id, for a checkout to carry; null when visits are not being counted here. */

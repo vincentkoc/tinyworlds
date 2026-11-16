@@ -3,6 +3,7 @@ import { API_URL } from "./donate";
 import { currentVisit } from "./funnel";
 import type { QuizLevelName } from "@/map/quiz";
 import type { QuizTally } from "./quiz";
+import { apiLocale } from "./api-locale";
 
 /**
  * Guess the building's one call to the API: the answer goes out, everyone's tally for that
@@ -30,8 +31,8 @@ export function answerRequest(input: AnswerInput & { visitId: string | null }): 
   query: string;
   variables: { input: Record<string, string | string[]> };
 } {
-  const { visitId, level, ...rest } = input;
-  const sent = { ...rest, level: level.toUpperCase() };
+  const { visitId, level, locale, ...rest } = input;
+  const sent = { ...rest, level: level.toUpperCase(), locale: apiLocale(locale) };
   return { query: ANSWER, variables: { input: visitId ? { ...sent, visitId } : sent } };
 }
 

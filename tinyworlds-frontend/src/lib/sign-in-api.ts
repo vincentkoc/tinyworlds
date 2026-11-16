@@ -1,6 +1,7 @@
 import type { Locale } from "@/i18n/locale";
 import { authUrl, sessionOf, type AdminSession, type Purpose } from "./admin";
 import { API_URL } from "./donate";
+import { apiLocale } from "./api-locale";
 
 /**
  * Signing in, for admins and donors alike. REST, as auth is everywhere in these projects:
@@ -52,7 +53,13 @@ export async function requestLink(
   purpose: Purpose,
   list?: string,
 ): Promise<void> {
-  await post("magic-link", { email, returnUrl, locale, purpose, ...(list ? { list } : {}) });
+  await post("magic-link", {
+    email,
+    returnUrl,
+    locale: apiLocale(locale),
+    purpose,
+    ...(list ? { list } : {}),
+  });
 }
 
 /** Trades the token of a sign-in link for a session; "unauthorized" when the link is spent or stale. */

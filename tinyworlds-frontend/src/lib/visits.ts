@@ -1,6 +1,7 @@
 import type { Locale } from "@/i18n/locale";
 import { API_URL } from "./donate";
 import { currentVisit } from "./funnel";
+import { apiLocale } from "./api-locale";
 
 /**
  * How many visits each world has had, and how many are there now: what the front page's cards
@@ -30,7 +31,10 @@ const VISITS = `query WorldVisits($input: WorldVisitsInput!) { worldVisits(input
 
 /** The GraphQL request that says a visit's map is still open. */
 export function presenceRequest(visit: string, world: string, locale: Locale) {
-  return { query: PRESENCE, variables: { input: { visitId: visit, world, locale } } };
+  return {
+    query: PRESENCE,
+    variables: { input: { visitId: visit, world, locale: apiLocale(locale) } },
+  };
 }
 
 /** The GraphQL request that asks for the worlds' visits. */
