@@ -23,9 +23,9 @@ search, every building at its height.
 | --- | --- | --- |
 | ![Downtown Truckee, the railroad and the river](tinyworlds-frontend/public/og/tinytkf.jpg) | ![Winterfell](tinyworlds-frontend/public/og/tinywinterfell.jpg) | ![King's Landing](tinyworlds-frontend/public/og/tinykingslanding.jpg) |
 
-| tinywesteros |
-| --- |
-| ![Westeros and Essos](tinyworlds-frontend/public/og/tinywesteros.jpg) |
+| tinywesteros | tinysz · Shenzhen |
+| --- | --- |
+| ![Westeros and Essos](tinyworlds-frontend/public/og/tinywesteros.jpg) | [![Nanshan to Luohu, Shenzhen](tinyworlds-frontend/public/og/tinysz.jpg)](https://tinysz.com) |
 
 Nothing is drawn by hand and no image model is involved. The maps are rendered procedurally from
 open data by a software rasterizer written for the purpose: building footprints and heights,
@@ -206,11 +206,6 @@ deploy/deploy.sh release              # what the workflow runs: main, where the 
 ```
 
 See [deploy/README.md](deploy/README.md).
-
-## Other maps
-
-[Tiny Shenzhen](https://tinysz.com) is a map of Shenzhen built with this pipeline
-([vincentkoc/tinyshenzhen](https://github.com/vincentkoc/tinyshenzhen)).
 
 ## Contact
 
